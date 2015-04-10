@@ -1,0 +1,47 @@
+{
+  "name": "money-app-firefox-os",
+  "version": "1.0.0",
+  "description": "firefox os app to handle your budget",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "browserify": "browserify -e app.js -o bundle.js ",
+    "watch": "watchify app.js -o bundle.js -v",
+    "start": "npm run watch & gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juancjara/money-app-firefox-os.git"
+  },
+  "keywords": [
+    "firefox",
+    "os",
+    "money",
+    "budget"
+  ],
+  "author": "jcj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juancjara/money-app-firefox-os/issues"
+  },
+  "homepage": "https://github.com/juancjara/money-app-firefox-os",
+  "devDependencies": {
+    "babelify": "^6.0.2",
+    "browserify": "^9.0.8",
+    "gulp": "^3.8.11",
+    "gulp-less": "^3.0.2",
+    "gulp-notify": "^2.2.0",
+    "material-ui": "^0.7.3",
+    "react-tap-event-plugin": "^0.1.6",
+    "require-dir": "^0.3.0",
+    "watchify": "^3.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "dependencies": {
+    "react": "^0.13.1"
+  }
+}
