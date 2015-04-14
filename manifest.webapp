@@ -1,0 +1,15 @@
+{
+  "name": "Budget",
+  "description": "Handle your budget",
+  "version": "1.0",
+  "icons": {
+    "128": "/images/guitar128.png"
+  },
+  "orientation": "portrait",
+  "developer": {
+    "name": "Juan Carlos Jara",
+    "url": "https://github.com/juancjara"
+  },
+  "launch_path": "/index.html",
+  "default_locale": "en"
+}

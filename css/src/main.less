@@ -5,3 +5,154 @@
 //@import "my-custom-overrides.less";
 
 @import "node_modules/material-ui/src/less/components.less";
+
+@keyframes shake {
+  0% {
+    transform: translate(3px, 0);
+  }
+  50% {
+    transform: translate(-3px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@-moz-keyframes shake {
+  0% {
+    -moz-transform: translate(3px, 0);
+  }
+  50% {
+    -moz-transform: translate(-3px, 0);
+  }
+  100% {
+    -moz-transform: translate(0, 0);
+  }
+}
+
+@-webkit-keyframes shake {
+  0% {
+    -webkit-transform: translate(3px, 0);
+  }
+  50% {
+    -webkit-transform: translate(-3px, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+  }
+}
+
+@-ms-keyframes shake {
+  0% {
+    -ms-transform: translate(3px, 0);
+  }
+  50% {
+    -ms-transform: translate(-3px, 0);
+  }
+  100% {
+    -ms-transform: translate(0, 0);
+  }
+}
+
+@-o-keyframes shake {
+  0% {
+    -o-transform: translate(3px, 0);
+  }
+  50% {
+    -o-transform: translate(-3px, 0);
+  }
+  100% {
+    -o-transform: translate(0, 0);
+  }
+}
+
+.shake {
+  animation: shake 150ms 2 linear;
+  -moz-animation: shake 150ms 2 linear;
+  -webkit-animation: shake 150ms 2 linear;
+  -o-animation: shake 150ms 2 linear;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.full-width {
+  min-width: 100%;
+}
+
+.same-line {
+  display: inline-block;
+}
+
+.no-width {
+  min-width: 0;
+}
+
+.block-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav {
+  min-height: 50px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 50px;
+  color: white;
+  background: @blue-500;
+}
+
+.calculator {
+  .buttons {
+    > div {
+      padding: 0 1px;
+      margin-top: 1px;
+      flex:1 25%;
+    }
+
+    .mui-raised-button {
+      min-width: 0;
+    }
+  }
+}
+
+.category {
+  .cat-list {
+    > div {
+      flex: 1 33.33%;
+    }
+  }
+}
+
+.main {
+  .mui-font-style-display-1 {
+    margin: 10px 0;
+    padding-top: 0;
+  }
+  
+  .total-income {
+    color: @green-500;
+  }
+
+  .total-expense {
+    color: @red-500;
+  }
+
+  .more-used {
+    margin: 0 auto;
+    width: 95%;
+
+    li {
+      display: inline-block;
+      margin: 10px 10px;
+
+      .mui-raised-button {
+        min-width: 60px;
+      }
+    }
+  }
+  .actions > div{
+    margin: 0 50px;
+  }
+}
