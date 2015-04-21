@@ -65,7 +65,7 @@ let Amount = React.createClass({
         </div>
         <RaisedButton 
           onTouchEnd = {this.continue} 
-          className = 'full-width'
+          className = 'full-width bottom main-btn'
           label = 'Pick Category' 
           primary = {true}/>
       </div>

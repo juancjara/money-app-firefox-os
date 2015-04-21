@@ -7,46 +7,62 @@ import MovementList from './MovementList.jsx';
 let App = React.createClass({
   getInitialState() {
     return {
-      view: 'Calc'
+      view: 'Main',
+      type: null,
+      back: null
     };
   },
 
-  handle() {
-    console.log('calc');
+  back() {
+    let currentView = this.state.view;
+    let backView = this.state.back;
+    let view = backView ? backView: 'Main';
+    if (currentView === view) {
+      return;
+    }
+    console.log('back', currentView, view);
     this.setState({
-      view: 'Calc'
-    });
-  }, 
-
-  handleMain() {
-    this.setState({
-      view: 'Main' 
+      view: view,
+      back: null 
     });
   },
 
-  showList() {
-    this.setState({view: 'Mov'});
+  changeView(view, data) {
+    this.setState({
+      view: view,
+      back: this.state.view,
+      data: data
+    });
+  },
+
+  handle(data) {
+    this.changeView('Calc', data);
+  },
+
+  renderView() {
+
+    switch (this.state.view) {
+      case 'Main': 
+        return <Main {...this.props} 
+                onClick = {this.handle} 
+                showList = {this.changeView.bind(null, 'Mov')} />
+      case 'Calc':
+        return <Calc 
+                  data = {this.state.data}
+                  onClick = {this.changeView.bind(null, 'Main')} />
+      case 'Mov': 
+        return <MovementList />
+    }
   },
 
   render () {
-    let view = null;
-    switch (this.state.view) {
-      case 'Main': 
-        view = <Main onClick = {this.handle} showList = {this.showList}/>
-        break;
-      case 'Calc':
-        view = <Calc onClick = {this.handleMain} />
-        break;
-      case 'Mov': 
-        view = <MovementList />
-        break;
-    }
     return (
       <div>
         <nav>
-          Budget Handler
+          <span className = 'back' onTouchEnd = {this.back} >B</span>
+          <span className = 'title' >Budget Handler</span>
         </nav>
-        {view}
+        {this.renderView()}
       </div>
     )
   }

@@ -14,7 +14,7 @@ let Category = React.createClass({
   },
 
   componentDidMount: function() {
-    db.getCategoryList((list) => {
+    db.getCategoryList(this.props.type, (list) => {
       this.setState({
         categories: list 
       });
@@ -31,7 +31,7 @@ let Category = React.createClass({
                 key = {i} 
                 secondary = {true} 
                 label = {item.name}
-                onClick = {this.handleSelection.bind(null, item)} />
+                onTouchEnd = {this.handleSelection.bind(null, item)} />
     });
     return (
       <div className = 'category' >

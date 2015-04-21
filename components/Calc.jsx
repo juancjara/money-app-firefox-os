@@ -9,11 +9,13 @@ let RaisedButton = mui.RaisedButton;
 let Calc = React.createClass({
 
   getInitialState() {
+    console.log('data', this.props.data);
     return {
-      view: <Amount onClick = {this.setAmount} />,
+      view: <Amount  
+              onClick = {this.setAmount} />,
       data: {
         amount: 0,
-        category: this.props.category
+        category: this.props.data.category
       }
     };
   },
@@ -48,6 +50,7 @@ let Calc = React.createClass({
       return this.setState({
         data: data,
         view: <Category 
+                  type = {this.props.data.type} 
                   amount = {amount}
                   onClick = {this.setCategory}
                   back = {this.editAmount} /> 
