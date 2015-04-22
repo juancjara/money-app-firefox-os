@@ -6,71 +6,21 @@
 
 @import "node_modules/material-ui/src/less/components.less";
 
-@keyframes shake {
-  0% {
-    transform: translate(3px, 0);
-  }
-  50% {
-    transform: translate(-3px, 0);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
+@import "animations.less";
 
-@-moz-keyframes shake {
-  0% {
-    -moz-transform: translate(3px, 0);
+.bottom {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  &.main-btn {
+    height: 60px;
+    .mui-raised-button-container {
+      height: 100%;
+      .mui-raised-button-label {
+        font-size: 1.6em;
+      }
+    }
   }
-  50% {
-    -moz-transform: translate(-3px, 0);
-  }
-  100% {
-    -moz-transform: translate(0, 0);
-  }
-}
-
-@-webkit-keyframes shake {
-  0% {
-    -webkit-transform: translate(3px, 0);
-  }
-  50% {
-    -webkit-transform: translate(-3px, 0);
-  }
-  100% {
-    -webkit-transform: translate(0, 0);
-  }
-}
-
-@-ms-keyframes shake {
-  0% {
-    -ms-transform: translate(3px, 0);
-  }
-  50% {
-    -ms-transform: translate(-3px, 0);
-  }
-  100% {
-    -ms-transform: translate(0, 0);
-  }
-}
-
-@-o-keyframes shake {
-  0% {
-    -o-transform: translate(3px, 0);
-  }
-  50% {
-    -o-transform: translate(-3px, 0);
-  }
-  100% {
-    -o-transform: translate(0, 0);
-  }
-}
-
-.shake {
-  animation: shake 150ms 2 linear;
-  -moz-animation: shake 150ms 2 linear;
-  -webkit-animation: shake 150ms 2 linear;
-  -o-animation: shake 150ms 2 linear;
 }
 
 .text-center {
@@ -97,18 +47,23 @@
 nav {
   min-height: 50px;
   font-size: 30px;
-  text-align: center;
   line-height: 50px;
   color: white;
+  text-align: center;
   background: @blue-500;
+  .back {
+    position: absolute;
+    left: 0;
+    text-align: left;
+  }
 }
 
 .calculator {
   .buttons {
     > div {
-      padding: 0 1px;
-      margin-top: 1px;
       flex:1 25%;
+      margin-top: 1px;
+      padding: 0 1px;
     }
 
     .mui-raised-button {
@@ -127,8 +82,8 @@ nav {
 
 .main {
   .mui-font-style-display-1 {
-    margin: 10px 0;
     padding-top: 0;
+    margin: 5px 0 0 0;
   }
   
   .total-income {
@@ -141,6 +96,7 @@ nav {
 
   .more-used {
     margin: 0 auto;
+    min-height: 200px;
     width: 95%;
 
     li {

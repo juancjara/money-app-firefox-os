@@ -7,7 +7,7 @@ import MovementList from './MovementList.jsx';
 let App = React.createClass({
   getInitialState() {
     return {
-      view: 'Main',
+      view: 'Mov',
       type: null,
       back: null
     };
@@ -22,16 +22,16 @@ let App = React.createClass({
     }
     console.log('back', currentView, view);
     this.setState({
-      view: view,
+      view,
       back: null 
     });
   },
 
   changeView(view, data) {
     this.setState({
-      view: view,
+      view,
       back: this.state.view,
-      data: data
+      data
     });
   },
 
@@ -45,13 +45,15 @@ let App = React.createClass({
       case 'Main': 
         return <Main {...this.props} 
                 onClick = {this.handle} 
-                showList = {this.changeView.bind(null, 'Mov')} />
-      case 'Calc':
+                showList = {this.changeView} />
+      case 'Calc': 
         return <Calc 
                   data = {this.state.data}
                   onClick = {this.changeView.bind(null, 'Main')} />
       case 'Mov': 
-        return <MovementList />
+        return <MovementList data = {this.state.data} />
+      case 'Set': 
+        return <Maain />
     }
   },
 

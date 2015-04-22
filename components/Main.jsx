@@ -16,7 +16,10 @@ let Main = React.createClass({
   },
 
   showList() {
-    this.props.showList();
+    let data = {
+      amount: this.state.mainAmount.total
+    }
+    this.props.showList('Mov', data);
   },
 
   update() {

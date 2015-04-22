@@ -5,9 +5,9 @@ let MovementItem = React.createClass({
   render() {
     return (
       <li>
-        {this.props.item.type}
-        {this.props.item.date}
         {this.props.item.amount}
+        {this.props.item.date}
+        {this.props.item.category.name}
       </li>
     );
   }
