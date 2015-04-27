@@ -54,6 +54,7 @@ let Amount = React.createClass({
   },
 
   render() {
+    const lblBtn = this.props.categoryIsSet ? 'Save move': 'Pick Category'; 
     return (
       <div>
         <AmountDetail
@@ -66,7 +67,7 @@ let Amount = React.createClass({
         <RaisedButton 
           onTouchEnd = {this.continue} 
           className = 'full-width bottom main-btn'
-          label = 'Pick Category' 
+          label = {lblBtn} 
           primary = {true}/>
       </div>
     )

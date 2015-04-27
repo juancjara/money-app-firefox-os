@@ -62,11 +62,11 @@ let Main = React.createClass({
     return (
       <div className = 'main text-center'>
         <div 
-          className="mui-font-style-display-1 total-income">
+          className="mui-font-style-display-1 income">
           $ {this.state.mainAmount.income}
         </div>
         <div 
-          className="mui-font-style-display-1 total-expense">
+          className="mui-font-style-display-1 expense">
           $ {this.state.mainAmount.expense}
         </div>
         <ul className = 'more-used'>

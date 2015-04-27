@@ -7,7 +7,7 @@ import MovementList from './MovementList.jsx';
 let App = React.createClass({
   getInitialState() {
     return {
-      view: 'Mov',
+      view: 'Main',
       type: null,
       back: null
     };

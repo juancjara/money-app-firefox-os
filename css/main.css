@@ -2769,6 +2769,18 @@ hr {
 .bottom.main-btn .mui-raised-button-container .mui-raised-button-label {
   font-size: 1.6em;
 }
+.income {
+  color: #4caf50;
+}
+.expense {
+  color: #f44336;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
 .text-center {
   text-align: center;
 }
@@ -2820,12 +2832,6 @@ nav .back {
 .main .mui-font-style-display-1 {
   padding-top: 0;
   margin: 5px 0 0 0;
-}
-.main .total-income {
-  color: #4caf50;
-}
-.main .total-expense {
-  color: #f44336;
 }
 .main .more-used {
   margin: 0 auto;

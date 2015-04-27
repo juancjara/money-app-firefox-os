@@ -10,20 +10,28 @@ let Calc = React.createClass({
 
   getInitialState() {
     return {
-      view: <Amount  
-              onClick = {this.setAmount} />,
+      view: this.getAmountView(),
       data: {
-        amount: 0,
+        amount: '0',
         category: this.props.data.category
       }
     };
   },
 
+  getAmountView() {
+    let amount;
+    if (this.state) {
+      amount = this.state.data.amount;
+    }
+    return <Amount 
+              onClick = {this.setAmount} 
+              categoryIsSet = {this.props.data.category != null} 
+              amount = {amount} />
+  },
+
   editAmount() {
     this.setState({ 
-      view: <Amount 
-              onClick = {this.setAmount} 
-              amount = {this.state.data.amount}/> 
+      view: this.getAmountView()
     });
   },
 
