@@ -182,17 +182,30 @@ const db = {
   createDB(cb) {
     const summaryDefault = {income: '0', expense: '0', total: '0'};
     const categories = [
-      {id: '0', name: 'a', used: 0, type: constants.EXPENSE},
-      {id: '1', name: 'b', used: 0, type: constants.EXPENSE},
-      {id: '2', name: 'c', used: 0, type: constants.EXPENSE},
-      {id: '3', name: 'd', used: 0, type: constants.EXPENSE},
-      {id: '4', name: 'e', used: 0, type: constants.EXPENSE},
-      {id: '5', name: 'f', used: 0, type: constants.EXPENSE},
-      {id: '6', name: 'g', used: 0, type: constants.EXPENSE},
-      {id: '7', name: 'h', used: 0, type: constants.INCOME},
-      {id: '8', name: 'i', used: 0, type: constants.INCOME},
-      {id: '9', name: 'j', used: 0, type: constants.INCOME}
+      {id: '0', name: 'home', icon: 'icomoon-home2', 
+        used: 0, type: constants.EXPENSE},
+      {id: '1', name: 'coche', icon: 'icomoon-car', 
+        used: 0, type: constants.EXPENSE},
+      {id: '2', name: 'comidaasdfasfd', icon: 'icomoon-spoon-knife', 
+        used: 0, type: constants.EXPENSE},
+      {id: '3', name: 'deport', icon: 'icomoon-soccer', 
+        used: 0, type: constants.EXPENSE},
+      {id: '4', name: 'entre', icon: 'icomoon-glass2', 
+        used: 0, type: constants.EXPENSE},
+      {id: '5', name: 'factu', icon: 'icomoon-cash', 
+        used: 0, type: constants.EXPENSE},
+      {id: '6', name: 'salud', icon: 'icomoon-aid-kit2', 
+        used: 0, type: constants.EXPENSE},
+      {id: '7', name: 'mascota', icon: 'icomoon-paw', 
+        used: 0, type: constants.EXPENSE},
+      {id: '8', name: 'regalos', icon: 'icomoon-gift2', 
+        used: 0, type: constants.EXPENSE},
+      {id: '9', name: 'telefono', icon: 'icomoon-phone', 
+        used: 0, type: constants.EXPENSE},
+      {id: '10', name: 'transporte', icon: 'icomoon-bus', 
+        used: 0, type: constants.EXPENSE}
     ];
+    //restaurtant, ropa, salud, taxi, telefono, transporte
     createBulk([
       {key: keys.SUMMARY, value: summaryDefault},
       {key: keys.MOVES, value: []},

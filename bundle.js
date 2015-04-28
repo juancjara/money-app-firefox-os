@@ -146,6 +146,7 @@ var _mui = require('material-ui');
 
 var _mui2 = _interopRequireWildcard(_mui);
 
+var FontIcon = _mui2['default'].FontIcon;
 var RaisedButton = _mui2['default'].RaisedButton;
 
 var AmountDetail = _React2['default'].createClass({
@@ -162,6 +163,7 @@ var AmountDetail = _React2['default'].createClass({
   },
 
   render: function render() {
+    var icon = this.props.lbl_btn === 'X' ? 'icomoon icomoon-backspace2' : 'icomoon icomoon-pencil';
     return _React2['default'].createElement(
       'div',
       { id: this.props.id },
@@ -171,11 +173,14 @@ var AmountDetail = _React2['default'].createClass({
         '$ ',
         this.props.value
       ),
-      _React2['default'].createElement(RaisedButton, {
-        onTouchEnd: this.handleClick,
-        label: this.props.lbl_btn,
-        className: 'no-width',
-        secondary: true })
+      _React2['default'].createElement(
+        RaisedButton,
+        {
+          onTouchEnd: this.handleClick,
+          secondary: true },
+        _React2['default'].createElement(FontIcon, {
+          className: icon })
+      )
     );
   }
 
@@ -280,12 +285,19 @@ var App = _React2['default'].createClass({
         _React2['default'].createElement(
           'span',
           { className: 'back', onTouchEnd: this.back },
-          'B'
+          _React2['default'].createElement('span', { className: 'icomoon icomoon-arrow-left' })
         ),
         _React2['default'].createElement(
           'span',
           { className: 'title' },
           'Budget Handler'
+        ),
+        _React2['default'].createElement(
+          'span',
+          {
+            className: 'settings',
+            onTouchEnd: this.changeView.bind(null, 'Settings') },
+          _React2['default'].createElement('span', { className: 'icomoon icomoon-cog' })
         )
       ),
       this.renderView()
@@ -466,6 +478,7 @@ var Category = _React2['default'].createClass({
       'div',
       { className: 'category' },
       _React2['default'].createElement(_AmountDetail2['default'], {
+        lbl_btn: 'edit',
         value: this.props.amount,
         onClick: this.props.back }),
       _React2['default'].createElement(
@@ -511,6 +524,7 @@ var _constants = require('../constants');
 
 var _constants2 = _interopRequireWildcard(_constants);
 
+var FontIcon = _mui2['default'].FontIcon;
 var RaisedButton = _mui2['default'].RaisedButton;
 var FloatingActionButton = _mui2['default'].FloatingActionButton;
 
@@ -565,10 +579,19 @@ var Main = _React2['default'].createClass({
       return _React2['default'].createElement(
         'li',
         { key: i },
-        _React2['default'].createElement(RaisedButton, {
-          label: item.name,
-          secondary: true,
-          onTouchEnd: _this2.handleCategory.bind(null, item) })
+        _React2['default'].createElement(
+          RaisedButton,
+          {
+            onTouchEnd: _this2.handleCategory.bind(null, item),
+            secondary: true },
+          _React2['default'].createElement(FontIcon, {
+            className: 'icomoon ' + item.icon }),
+          _React2['default'].createElement(
+            'div',
+            { className: 'title' },
+            item.name
+          )
+        )
       );
     });
 
@@ -1231,7 +1254,19 @@ var db = {
   },
   createDB: function createDB(cb) {
     var summaryDefault = { income: '0', expense: '0', total: '0' };
-    var categories = [{ id: '0', name: 'a', used: 0, type: _constants2['default'].EXPENSE }, { id: '1', name: 'b', used: 0, type: _constants2['default'].EXPENSE }, { id: '2', name: 'c', used: 0, type: _constants2['default'].EXPENSE }, { id: '3', name: 'd', used: 0, type: _constants2['default'].EXPENSE }, { id: '4', name: 'e', used: 0, type: _constants2['default'].EXPENSE }, { id: '5', name: 'f', used: 0, type: _constants2['default'].EXPENSE }, { id: '6', name: 'g', used: 0, type: _constants2['default'].EXPENSE }, { id: '7', name: 'h', used: 0, type: _constants2['default'].INCOME }, { id: '8', name: 'i', used: 0, type: _constants2['default'].INCOME }, { id: '9', name: 'j', used: 0, type: _constants2['default'].INCOME }];
+    var categories = [{ id: '0', name: 'home', icon: 'icomoon-home2',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '1', name: 'coche', icon: 'icomoon-car',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '2', name: 'comidaasdfasfd', icon: 'icomoon-spoon-knife',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '3', name: 'deport', icon: 'icomoon-soccer',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '4', name: 'entre', icon: 'icomoon-glass2',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '5', name: 'factu', icon: 'icomoon-cash',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '6', name: 'salud', icon: 'icomoon-aid-kit2',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '7', name: 'mascota', icon: 'icomoon-paw',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '8', name: 'regalos', icon: 'icomoon-gift2',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '9', name: 'telefono', icon: 'icomoon-phone',
+      used: 0, type: _constants2['default'].EXPENSE }, { id: '10', name: 'transporte', icon: 'icomoon-bus',
+      used: 0, type: _constants2['default'].EXPENSE }];
+    //restaurtant, ropa, salud, taxi, telefono, transporte
     createBulk([{ key: keys.SUMMARY, value: summaryDefault }, { key: keys.MOVES, value: [] }, { key: keys.MOVE_ID, value: 0 }, { key: keys.CATEGORIES, value: categories }], cb);
   },
   init: function init(cb) {

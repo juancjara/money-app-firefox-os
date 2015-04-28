@@ -2807,12 +2807,20 @@ nav {
   line-height: 50px;
   color: white;
   text-align: center;
+  vertical-align: bottom;
   background: #2196f3;
 }
 nav .back {
+  left: 5px;
   position: absolute;
-  left: 0;
   text-align: left;
+  top: 3px;
+}
+nav .settings {
+  position: absolute;
+  right: 10px;
+  text-align: right;
+  top: 3px;
 }
 .calculator .buttons > div {
   -webkit-flex: 1 25%;
@@ -2840,11 +2848,23 @@ nav .back {
 }
 .main .more-used li {
   display: inline-block;
-  margin: 10px 10px;
+  margin: 13px 10px;
 }
 .main .more-used li .mui-raised-button {
+  max-width: 60px;
   min-width: 60px;
+  color: white;
+}
+.main .more-used li .mui-raised-button .icomoon {
+  padding-top: 5px;
+}
+.main .more-used li .mui-raised-button .title {
+  margin: 0 2px;
+  overflow: hidden;
 }
 .main .actions > div {
   margin: 0 50px;
+}
+.icomoon {
+  color: white;
 }

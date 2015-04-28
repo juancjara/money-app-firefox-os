@@ -3,6 +3,7 @@ import mui from 'material-ui';
 import db from '../logic/db';
 import constants from '../constants';
 
+let FontIcon = mui.FontIcon;
 let RaisedButton = mui.RaisedButton;
 let FloatingActionButton = mui.FloatingActionButton;
 
@@ -52,9 +53,12 @@ let Main = React.createClass({
       return (
         <li key = {i}>
           <RaisedButton 
-            label = {item.name} 
-            secondary = {true} 
-            onTouchEnd = {this.handleCategory.bind(null, item)} />
+            onTouchEnd = {this.handleCategory.bind(null, item)} 
+            secondary = {true} >
+              <FontIcon 
+                className = {'icomoon ' + item.icon}/>
+              <div className = 'title'>{item.name}</div>
+          </RaisedButton>
         </li>
       )
     });

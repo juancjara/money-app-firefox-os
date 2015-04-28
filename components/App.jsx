@@ -61,8 +61,15 @@ let App = React.createClass({
     return (
       <div>
         <nav>
-          <span className = 'back' onTouchEnd = {this.back} >B</span>
+          <span className = 'back' onTouchEnd = {this.back} >
+            <span className = 'icomoon icomoon-arrow-left' />
+          </span>
           <span className = 'title' >Budget Handler</span>
+          <span 
+            className = 'settings' 
+            onTouchEnd = {this.changeView.bind(null, 'Settings')} >
+            <span className = 'icomoon icomoon-cog' />
+          </span>
         </nav>
         {this.renderView()}
       </div>

@@ -36,6 +36,7 @@ let Category = React.createClass({
     return (
       <div className = 'category' >
         <AmountDetail 
+          lbl_btn = 'edit' 
           value = {this.props.amount}
           onClick = {this.props.back} />
         <div>Pick a category</div>

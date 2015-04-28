@@ -66,11 +66,19 @@ nav {
   line-height: 50px;
   color: white;
   text-align: center;
+  vertical-align: bottom;
   background: @blue-500;
   .back {
+    left: 5px;
     position: absolute;
-    left: 0;
     text-align: left;
+    top: 3px;
+  }
+  .settings {
+    position: absolute;
+    right: 10px;
+    text-align: right;
+    top: 3px;
   }
 }
 
@@ -109,14 +117,28 @@ nav {
 
     li {
       display: inline-block;
-      margin: 10px 10px;
+      margin: 13px 10px;
 
       .mui-raised-button {
+        max-width: 60px;
         min-width: 60px;
-      }
+        color: white;
+
+        .icomoon {
+          padding-top: 5px;
+        }
+        .title {
+          margin: 0 2px;
+          overflow: hidden;
+        }
+      }      
     }
   }
   .actions > div{
     margin: 0 50px;
   }
+}
+
+.icomoon{
+  color: white;
 }

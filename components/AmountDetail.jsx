@@ -1,6 +1,7 @@
 import React from 'react';
 import mui from 'material-ui';
 
+let FontIcon = mui.FontIcon;
 let RaisedButton = mui.RaisedButton;
 
 let AmountDetail = React.createClass({
@@ -16,6 +17,8 @@ let AmountDetail = React.createClass({
   },
 
   render() {
+    let icon = this.props.lbl_btn === 'X' ? 'icomoon icomoon-backspace2':
+                                            'icomoon icomoon-pencil';
     return (
       <div id = {this.props.id} >
         <span className="mui-font-style-display-3">
@@ -23,9 +26,10 @@ let AmountDetail = React.createClass({
         </span>
         <RaisedButton 
           onTouchEnd = {this.handleClick} 
-          label = {this.props.lbl_btn} 
-          className = 'no-width' 
-          secondary = {true} />
+          secondary = {true} >
+            <FontIcon 
+              className = {icon}/>
+        </RaisedButton>
       </div>
     )
   }
