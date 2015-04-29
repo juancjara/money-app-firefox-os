@@ -1,6 +1,7 @@
 import React from 'react';
 import mui from 'material-ui';
 
+import Settings from '../logic/Settings';
 import MovementItem from './MovementItem.jsx';
 import MovementItemGrouped from './MovementItemGrouped.jsx';
 import db from '../logic/db';
@@ -12,13 +13,13 @@ let MovementList = React.createClass({
     return {
       moves: [],
       movesGrouped: [],
-      groupedBy: true
+      groupedBy: false
     }
   },
 
   getDefaultProps() {
     return {
-      data: {amount: 'ggwp'}
+      data: {amount: '42.5'}
     };
   },
   
@@ -49,7 +50,6 @@ let MovementList = React.createClass({
       movesGrouped.splice(x, 1);
     }
     this.setState({movesGrouped});
-    console.log(move[0]);
     db.removeMovement(move[0], () => {});
   },
 
@@ -85,14 +85,17 @@ let MovementList = React.createClass({
 
   render() {
     return (
-      <div>
-        <div className="mui-font-style-display-2">$ {this.props.data.amount}</div>
+      <div className = 'Movement'>
+        <div className="text-center mui-font-style-display-2">
+          {Settings.get('currency').value}
+          {this.props.data.amount}
+        </div>
         <Checkbox
           onCheck = {this.handleToggle} 
           labelPosition = "left" 
-          defaultChecked = {this.state.groupedBy} 
+          defaultSwitched = {this.state.groupedBy} 
           label="Group by category" />
-        <ul>
+        <ul className = 'list'>
           {this.getMoves()}
         </ul>
       </div>

@@ -3,11 +3,12 @@ import mui from 'material-ui';
 import Main from './Main.jsx';
 import Calc from './Calc.jsx';
 import MovementList from './MovementList.jsx';
+import SettingsView from './SettingsView.jsx';
 
 let App = React.createClass({
   getInitialState() {
     return {
-      view: 'Main',
+      view: 'Mov',
       type: null,
       back: null
     };
@@ -16,6 +17,10 @@ let App = React.createClass({
   back() {
     let currentView = this.state.view;
     let backView = this.state.back;
+    console.log('gg');
+    if (currentView === 'Set') {
+      backView = null;
+    }
     let view = backView ? backView: 'Main';
     if (currentView === view) {
       return;
@@ -28,6 +33,7 @@ let App = React.createClass({
   },
 
   changeView(view, data) {
+    console.log('changeView');
     this.setState({
       view,
       back: this.state.view,
@@ -53,7 +59,7 @@ let App = React.createClass({
       case 'Mov': 
         return <MovementList data = {this.state.data} />
       case 'Set': 
-        return <Maain />
+        return <SettingsView />
     }
   },
 
@@ -67,7 +73,7 @@ let App = React.createClass({
           <span className = 'title' >Budget Handler</span>
           <span 
             className = 'settings' 
-            onTouchEnd = {this.changeView.bind(null, 'Settings')} >
+            onTouchEnd = {this.changeView.bind(null, 'Set')} >
             <span className = 'icomoon icomoon-cog' />
           </span>
         </nav>

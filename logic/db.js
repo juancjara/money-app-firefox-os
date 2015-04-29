@@ -1,6 +1,7 @@
 import localforage from 'localforage';
 import moment from 'moment';
 import constants from '../constants';
+import Settings from './Settings';
 
 const appName = 'budget';
 
@@ -8,7 +9,8 @@ const keys = {
   MOVES: appName + '-moves',
   MOVE_ID: appName + '-idMov',
   CATEGORIES : appName + '-categories',
-  SUMMARY: appName + '-summary'
+  SUMMARY: appName + '-summary',
+  SETTINGS: appName + '-settings'
 }
 
 function format(a) {
@@ -39,12 +41,25 @@ function createBulk(tasks, cb) {
   });
   Promise.all(promises)
     .then(values => {
-      cb();
+      cb(values);
     });
 }
 
 //type = 1 income , 0 expense
 const db = {
+  getSettings(cb) {
+    localforage.getItem(keys.SETTINGS).then(cb);
+  },
+  updateSettings(newData, key, cb) {
+
+    function customUpdate(newData, key) {
+      return function(elem) {
+        elem[key] = newData;
+        return elem;
+      }
+    }
+    update(keys.SETTINGS, customUpdate(newData, key), cb);
+  },
   getCategoryList(type, cb) {
     localforage.getItem(keys.CATEGORIES)
       .then(arr => {
@@ -190,7 +205,7 @@ const db = {
         used: 0, type: constants.EXPENSE},
       {id: '3', name: 'deport', icon: 'icomoon-soccer', 
         used: 0, type: constants.EXPENSE},
-      {id: '4', name: 'entre', icon: 'icomoon-glass2', 
+      {id: '4', name: 'entretenimiento', icon: 'icomoon-glass2', 
         used: 0, type: constants.EXPENSE},
       {id: '5', name: 'factu', icon: 'icomoon-cash', 
         used: 0, type: constants.EXPENSE},
@@ -203,14 +218,58 @@ const db = {
       {id: '9', name: 'telefono', icon: 'icomoon-phone', 
         used: 0, type: constants.EXPENSE},
       {id: '10', name: 'transporte', icon: 'icomoon-bus', 
-        used: 0, type: constants.EXPENSE}
+        used: 0, type: constants.EXPENSE},
+      {id: '11', name: 'studies', icon: 'icomoon-library', 
+        used: 0, type: constants.EXPENSE},
+      {id: '12', name: 'coins', icon: 'icomoon-coins', 
+        used: 0, type: constants.INCOME},
     ];
+    const settingsDefault = {
+      language: 0,
+      currency: 0
+    }
+
+    var moves = [
+      {
+        id: 0,
+        date: moment().toDate(),
+        amount: '34.50',
+        category: categories[0]
+      },
+      {
+        id: 1,
+        date: moment().toDate(),
+        amount: '34.50',
+        category: categories[0]
+      },
+      {
+        id: 2,
+        date: moment().toDate(),
+        amount: '60.50',
+        category: categories[12]
+      }
+      
+    ]
+    /*
+{
+        date: moment().toDate(),
+        amount: '64.50',
+        category: categories[0]
+      },
+      {
+        date: moment().toDate(),
+        amount: '50.50',
+        category: categories[1]
+      },
+    */
+
     //restaurtant, ropa, salud, taxi, telefono, transporte
     createBulk([
       {key: keys.SUMMARY, value: summaryDefault},
-      {key: keys.MOVES, value: []},
+      {key: keys.MOVES, value: moves},
       {key: keys.MOVE_ID, value: 0},
-      {key: keys.CATEGORIES, value: categories}
+      {key: keys.CATEGORIES, value: categories},
+      {key: keys.SETTINGS, value: settingsDefault}
     ], cb);
   },
   init(cb) {

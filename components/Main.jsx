@@ -2,6 +2,7 @@ import React from 'react';
 import mui from 'material-ui';
 import db from '../logic/db';
 import constants from '../constants';
+import Settings from '../logic/Settings';
 
 let FontIcon = mui.FontIcon;
 let RaisedButton = mui.RaisedButton;
@@ -67,11 +68,11 @@ let Main = React.createClass({
       <div className = 'main text-center'>
         <div 
           className="mui-font-style-display-1 income">
-          $ {this.state.mainAmount.income}
+          {Settings.get('currency').value} {this.state.mainAmount.income}
         </div>
         <div 
           className="mui-font-style-display-1 expense">
-          $ {this.state.mainAmount.expense}
+          {Settings.get('currency').value} {this.state.mainAmount.expense}
         </div>
         <ul className = 'more-used'>
           {categories}
@@ -79,7 +80,7 @@ let Main = React.createClass({
         <div 
           onTouchEnd = {this.showList} 
           className="mui-font-style-display-2">
-          $ {this.state.mainAmount.total}
+          {Settings.get('currency').value} {this.state.mainAmount.total}
         </div>
         <div className = 'actions'>
           <FloatingActionButton 

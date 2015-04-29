@@ -1,5 +1,6 @@
 import React from 'react';
 import mui from 'material-ui';
+import Settings from '../logic/Settings';
 
 let FontIcon = mui.FontIcon;
 let RaisedButton = mui.RaisedButton;
@@ -22,7 +23,7 @@ let AmountDetail = React.createClass({
     return (
       <div id = {this.props.id} >
         <span className="mui-font-style-display-3">
-          $ {this.props.value}
+          {Settings.get('currency').value} {this.props.value}
         </span>
         <RaisedButton 
           onTouchEnd = {this.handleClick} 

@@ -1,4 +1,5 @@
 import React from 'react';
+import Settings from '../logic/Settings';
 
 let MovementItem = React.createClass({
 
@@ -7,14 +8,25 @@ let MovementItem = React.createClass({
   },
 
   render() {
+    let amountClass = 'amount ' + 
+      (this.props.item.category.type > 0 ? 'income': 'expense');
     return (
-      <li>
-        {this.props.item.amount}
-        {this.props.item.date}
-        {this.props.item.category.name}
-        <div onClick = {this.remove}>
-          R
+      <li className = 'move-item'>
+        <div 
+          onClick = {this.remove}
+          className = 'remove icomoon-bin2 pull-left' />
+        <div className = 'detail-block pull-left'> 
+          <span className = 'category'>
+            {this.props.item.category.name}
+          </span>
+          <span className = {this.props.item.category.icon} />
+          <div className = {amountClass} >
+            {Settings.get('currency').value}
+            {this.props.item.amount}
+          </div>
+          <div className = 'date' >{this.props.item.date}</div>
         </div>
+
       </li>
     );
   }
