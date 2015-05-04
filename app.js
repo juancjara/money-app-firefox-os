@@ -5,7 +5,7 @@ import db from './logic/db';
 import Settings from './logic/Settings';
 
 injectTapEventPlugin();
-
+console.log('init all');
 db.init((values) =>{
   db.getSettings((conf) => {
     Settings.init(conf);

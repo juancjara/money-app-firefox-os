@@ -23,11 +23,13 @@ let MovementList = React.createClass({
     };
   },
   
-  handleToggle(e, toggled) {
-    this.onChange(toggled);
+  doToggle() {
+    this.onChange(!this.state.groupedBy);
+    $('.mui-enhanced-switch-input').click();
   },
 
-  onChange(groupedBy) {
+  onChange() {
+    let groupedBy = !this.state.groupedBy;
     if (groupedBy) {
       return db.getMovesGrouped((movesGrouped) => {
         this.setState({movesGrouped, groupedBy});
@@ -90,11 +92,12 @@ let MovementList = React.createClass({
           {Settings.get('currency').value}
           {this.props.data.amount}
         </div>
-        <Checkbox
-          onCheck = {this.handleToggle} 
-          labelPosition = "left" 
-          defaultSwitched = {this.state.groupedBy} 
-          label="Group by category" />
+        <span onTouchEnd = {this.doToggle}>
+          <Checkbox
+            labelPosition = "left" 
+            defaultSwitched = {this.state.groupedBy} 
+            label = {Settings.getText('group by category')} />
+        </span>
         <ul className = 'list'>
           {this.getMoves()}
         </ul>

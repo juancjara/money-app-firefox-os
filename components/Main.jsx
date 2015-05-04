@@ -58,7 +58,7 @@ let Main = React.createClass({
             secondary = {true} >
               <FontIcon 
                 className = {'icomoon ' + item.icon}/>
-              <div className = 'title'>{item.name}</div>
+              <div className = 'title'>{Settings.getText(item.name)}</div>
           </RaisedButton>
         </li>
       )

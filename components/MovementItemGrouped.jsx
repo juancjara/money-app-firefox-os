@@ -45,7 +45,7 @@ let MovementItemGrouped = React.createClass({
         <div onTouchEnd = {this.toggleView}>
           <span className = {classArrow} />
           <span className = 'category' > 
-            {this.props.item.category.name} 
+            {Settings.getText(this.props.item.category.name)}
           </span>
           <span className = {this.props.item.category.icon} />
           <div className = {amountClass} >

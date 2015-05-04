@@ -64,8 +64,10 @@ const db = {
     localforage.getItem(keys.CATEGORIES)
       .then(arr => {
         let filArr = arr.filter((elem) => {
-        return elem.type === type;
+          return elem.type === type;
         })
+        filArr.sort((a,b) => a.used < b.used);
+        console.log(filArr);
         cb(filArr);  
       })
   },
@@ -199,29 +201,33 @@ const db = {
     const categories = [
       {id: '0', name: 'home', icon: 'icomoon-home2', 
         used: 0, type: constants.EXPENSE},
-      {id: '1', name: 'coche', icon: 'icomoon-car', 
+      {id: '1', name: 'car', icon: 'icomoon-car', 
         used: 0, type: constants.EXPENSE},
-      {id: '2', name: 'comidaasdfasfd', icon: 'icomoon-spoon-knife', 
+      {id: '2', name: 'food', icon: 'icomoon-spoon-knife', 
         used: 0, type: constants.EXPENSE},
-      {id: '3', name: 'deport', icon: 'icomoon-soccer', 
+      {id: '3', name: 'sport', icon: 'icomoon-soccer', 
         used: 0, type: constants.EXPENSE},
-      {id: '4', name: 'entretenimiento', icon: 'icomoon-glass2', 
+      {id: '4', name: 'entertainment', icon: 'icomoon-glass2', 
         used: 0, type: constants.EXPENSE},
-      {id: '5', name: 'factu', icon: 'icomoon-cash', 
+      {id: '5', name: 'bills', icon: 'icomoon-cash', 
         used: 0, type: constants.EXPENSE},
-      {id: '6', name: 'salud', icon: 'icomoon-aid-kit2', 
+      {id: '6', name: 'health', icon: 'icomoon-aid-kit2', 
         used: 0, type: constants.EXPENSE},
-      {id: '7', name: 'mascota', icon: 'icomoon-paw', 
+      {id: '7', name: 'pet', icon: 'icomoon-paw', 
         used: 0, type: constants.EXPENSE},
-      {id: '8', name: 'regalos', icon: 'icomoon-gift2', 
+      {id: '8', name: 'gift', icon: 'icomoon-gift2', 
         used: 0, type: constants.EXPENSE},
-      {id: '9', name: 'telefono', icon: 'icomoon-phone', 
+      {id: '9', name: 'phone', icon: 'icomoon-phone', 
         used: 0, type: constants.EXPENSE},
-      {id: '10', name: 'transporte', icon: 'icomoon-bus', 
+      {id: '10', name: 'bus', icon: 'icomoon-bus', 
         used: 0, type: constants.EXPENSE},
       {id: '11', name: 'studies', icon: 'icomoon-library', 
         used: 0, type: constants.EXPENSE},
-      {id: '12', name: 'coins', icon: 'icomoon-coins', 
+      {id: '12', name: 'others', icon: 'icomoon-coins', 
+        used: 0, type: constants.INCOME},
+      {id: '13', name: 'savings', icon: 'icomoon-piggy-bank', 
+        used: 0, type: constants.INCOME},
+      {id: '14', name: 'salary', icon: 'icomoon-cash', 
         used: 0, type: constants.INCOME},
     ];
     const settingsDefault = {
@@ -229,41 +235,8 @@ const db = {
       currency: 0
     }
 
-    var moves = [
-      {
-        id: 0,
-        date: moment().toDate(),
-        amount: '34.50',
-        category: categories[0]
-      },
-      {
-        id: 1,
-        date: moment().toDate(),
-        amount: '34.50',
-        category: categories[0]
-      },
-      {
-        id: 2,
-        date: moment().toDate(),
-        amount: '60.50',
-        category: categories[12]
-      }
-      
-    ]
-    /*
-{
-        date: moment().toDate(),
-        amount: '64.50',
-        category: categories[0]
-      },
-      {
-        date: moment().toDate(),
-        amount: '50.50',
-        category: categories[1]
-      },
-    */
+    var moves = []
 
-    //restaurtant, ropa, salud, taxi, telefono, transporte
     createBulk([
       {key: keys.SUMMARY, value: summaryDefault},
       {key: keys.MOVES, value: moves},
@@ -273,13 +246,11 @@ const db = {
     ], cb);
   },
   init(cb) {
-    localforage.clear(() => {
-      localforage.getItem(keys.SUMMARY)
-        .then(val => {
-          if (val) return;
-          db.createDB(cb);
-        })
-    });
+    localforage.getItem(keys.SUMMARY)
+      .then(val => {
+        if (val) return cb();
+        db.createDB(cb);
+      })
   }
 }
 

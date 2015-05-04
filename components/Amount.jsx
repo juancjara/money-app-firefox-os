@@ -1,7 +1,8 @@
 import React from 'react';
 import mui from 'material-ui';
 import AmountDetail from './AmountDetail.jsx';
-import Calculator from '../logic/Calculator.js';
+import Calculator from '../logic/Calculator';
+import Settings from '../logic/Settings';
 
 let RaisedButton = mui.RaisedButton;
 
@@ -54,7 +55,7 @@ let Amount = React.createClass({
   },
 
   render() {
-    const lblBtn = this.props.categoryIsSet ? 'Save move': 'Pick Category'; 
+    const lblBtn = this.props.categoryIsSet ? 'save move': 'choose category'; 
     return (
       <div>
         <AmountDetail
@@ -67,7 +68,7 @@ let Amount = React.createClass({
         <RaisedButton 
           onTouchEnd = {this.continue} 
           className = 'full-width bottom main-btn'
-          label = {lblBtn} 
+          label = {Settings.getText(lblBtn)} 
           primary = {true}/>
       </div>
     )

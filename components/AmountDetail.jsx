@@ -21,11 +21,12 @@ let AmountDetail = React.createClass({
     let icon = this.props.lbl_btn === 'X' ? 'icomoon icomoon-backspace2':
                                             'icomoon icomoon-pencil';
     return (
-      <div id = {this.props.id} >
+      <div id = {this.props.id} className = 'amount-detail' >
         <span className="mui-font-style-display-3">
           {Settings.get('currency').value} {this.props.value}
         </span>
         <RaisedButton 
+          className = 'amount-edit'
           onTouchEnd = {this.handleClick} 
           secondary = {true} >
             <FontIcon 

@@ -17,7 +17,7 @@ let MovementItem = React.createClass({
           className = 'remove icomoon-bin2 pull-left' />
         <div className = 'detail-block pull-left'> 
           <span className = 'category'>
-            {this.props.item.category.name}
+            {Settings.getText(this.props.item.category.name)}
           </span>
           <span className = {this.props.item.category.icon} />
           <div className = {amountClass} >

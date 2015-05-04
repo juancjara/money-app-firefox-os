@@ -7,7 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "browserify": "browserify -e app.js -o bundle.js ",
     "watch": "watchify app.js -o bundle.js -v",
-    "start": "npm run watch & gulp"
+    "start": "npm run watch & gulp",
+    "create-directory": "rm -r money-prod; mkdir money-prod;",
+    "copy-files": "cp bundle.js money-prod/; cp index.html money-prod/; cp manifest.webapp money-prod/;cp -r fonts/ money-prod/; cp css/main.css money-prod/; cp -r vendor/ money-prod/",
+    "min-js": "browserify -e app.js | uglifyjs > bundle.js",
+    "deploy": "npm run create-directory && npm run min-js && npm run copy-files"
   },
   "repository": {
     "type": "git",

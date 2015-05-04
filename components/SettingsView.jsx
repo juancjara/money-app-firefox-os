@@ -9,7 +9,9 @@ let SettingsView = React.createClass({
   getInitialState: function() {
     return {
       currencyIndex: Settings.get('currency').index,
-      languageIndex: Settings.get('language').index
+      languageIndex: Settings.get('language').index,
+      languageLabel: Settings.getText('language'),
+      currencyLabel: Settings.getText('currency'),
     };
   },
 
@@ -20,20 +22,34 @@ let SettingsView = React.createClass({
 
   onChangeLanguage(e, languageIndex, menuItem) {
     Settings.set('language',languageIndex, menuItem.value);
-    this.setState({languageIndex});
+    this.setState({
+      languageLabel: Settings.getText('language'),
+      currencyLabel: Settings.getText('currency'),
+      languageIndex
+    });
   },
 
   render() {
     return (
-      <div>
-        <DropDownMenu 
-          selectedIndex = {this.state.currencyIndex} 
-          onChange = {this.onChangeCurrency} 
-          menuItems={constants.currencies} />
-        <DropDownMenu 
-          selectedIndex = {this.state.languageIndex} 
-          onChange = {this.onChangeLanguage} 
-          menuItems={constants.languages} />
+      <div className = 'settings-view'>
+        <div className = 'fields'>
+          <label className = 'mui-font-style-title'>
+            {this.state.currencyLabel}
+          </label>
+          <DropDownMenu 
+            selectedIndex = {this.state.currencyIndex} 
+            onChange = {this.onChangeCurrency} 
+            menuItems={constants.currencies} />
+        </div>
+        <div className = 'fields'>
+          <label className = 'mui-font-style-title'>
+            {this.state.languageLabel}
+          </label>
+          <DropDownMenu 
+            selectedIndex = {this.state.languageIndex} 
+            onChange = {this.onChangeLanguage} 
+            menuItems={constants.languages} />
+        </div>
       </div>
     )
   }
