@@ -3045,6 +3045,16 @@ nav .settings {
   padding-top: 0;
   margin: 5px 0 0 0;
 }
+.main .total-amount {
+  height: 40px;
+  margin-bottom: 2px;
+}
+.main .total-amount .mui-raised-button-container {
+  height: 100%;
+}
+.main .total-amount .mui-raised-button-label {
+  font-size: 1.8em;
+}
 .main .more-used {
   margin: 0 auto;
   min-height: 180px;

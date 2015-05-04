@@ -16,7 +16,6 @@ let Category = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('type', this.props.type)
     db.getCategoryList(this.props.type, (categories) => {
       this.setState({categories});
     });

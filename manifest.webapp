@@ -3,7 +3,7 @@
   "description": "Handle your budget",
   "version": "1.0",
   "icons": {
-    "128": "/images/guitar128.png"
+    "128": "/images/wallet128.png"
   },
   "orientation": "portrait",
   "developer": {

@@ -64,6 +64,8 @@ let Main = React.createClass({
       )
     });
 
+    let totalAmount = Settings.get('currency').value +this.state.mainAmount.total;
+
     return (
       <div className = 'main text-center'>
         <div 
@@ -77,11 +79,10 @@ let Main = React.createClass({
         <ul className = 'more-used'>
           {categories}
         </ul>
-        <div 
-          onTouchEnd = {this.showList} 
-          className="mui-font-style-display-2">
-          {Settings.get('currency').value} {this.state.mainAmount.total}
-        </div>
+        <RaisedButton 
+          className = 'total-amount' 
+          label = {totalAmount} 
+          onTouchEnd = {this.showList}/>
         <div className = 'actions'>
           <FloatingActionButton 
             onTouchEnd = {this.handleClick.bind(null, constants.EXPENSE)} 

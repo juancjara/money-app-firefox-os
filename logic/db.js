@@ -67,7 +67,6 @@ const db = {
           return elem.type === type;
         })
         filArr.sort((a,b) => a.used < b.used);
-        console.log(filArr);
         cb(filArr);  
       })
   },
@@ -171,7 +170,8 @@ const db = {
       amount: data.amount,
       category: {
         name: data.category.name,
-        id: data.category.id
+        id: data.category.id,
+        type: data.category.type
       } 
     };
 
@@ -247,10 +247,10 @@ const db = {
   },
   init(cb) {
     localforage.getItem(keys.SUMMARY)
-      .then(val => {
-        if (val) return cb();
-        db.createDB(cb);
-      })
+    .then(val => {
+      if (val) return cb();
+      db.createDB(cb);
+    })
   }
 }
 

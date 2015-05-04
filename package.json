@@ -1,5 +1,5 @@
 {
-  "name": "money-app-firefox-os",
+  "name": "Budget",
   "version": "1.0.0",
   "description": "firefox os app to handle your budget",
   "main": "app.js",
@@ -9,7 +9,7 @@
     "watch": "watchify app.js -o bundle.js -v",
     "start": "npm run watch & gulp",
     "create-directory": "rm -r money-prod; mkdir money-prod;",
-    "copy-files": "cp bundle.js money-prod/; cp index.html money-prod/; cp manifest.webapp money-prod/;cp -r fonts/ money-prod/; cp css/main.css money-prod/; cp -r vendor/ money-prod/",
+    "copy-files": "cp bundle.js money-prod/; cp index.html money-prod/; cp manifest.webapp money-prod/;cp -r fonts/ money-prod/;mkdir money-prod/css;cp css/main.css money-prod/css; cp -r vendor/ money-prod/; cp -r images/ money-prod/;cd money-prod/;zip -r money-app.zip .;",
     "min-js": "browserify -e app.js | uglifyjs > bundle.js",
     "deploy": "npm run create-directory && npm run min-js && npm run copy-files"
   },
