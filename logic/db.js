@@ -11,12 +11,12 @@ const keys = {
   CATEGORIES : appName + '-categories',
   SUMMARY: appName + '-summary',
   SETTINGS: appName + '-settings'
-}
+};
 
-function format(a) {
+var format = function(a) {
   a.date = moment(a.date).format('MMMM DD YYYY, h:mm:ss a');
   return a;
-}
+};
 
 const types = {};
 types[constants.INCOME] = 'income';
@@ -83,12 +83,15 @@ const db = {
       return arr;
     }, cb);
   },
+
   getMainAmount(cb) {
     localforage.getItem(keys.SUMMARY).then(cb);
   },
+
   nextId(cb) {
     update(keys.MOVE_ID, function(val) {return val + 1;}, cb);
   },
+
   getMovementList(cb) {
     localforage.getItem(keys.MOVES)
       .then((arr) => {
@@ -97,6 +100,7 @@ const db = {
         cb(temp);
     });
   },
+
   getMovesGrouped(cb) {
     db.getMovementList((arr) => {
         let grouped = {};
@@ -119,8 +123,9 @@ const db = {
         cb(temp);
       });
   },
+
   removeMovement(move, cb) {
-    function deleteElem(id) {
+    var deleteElem = function(id) {
       return function(arr) {
         let posFound;
         for (posFound = arr.length - 1; posFound >= 0; posFound--) {
@@ -129,13 +134,11 @@ const db = {
         arr.splice(posFound, 1);
         return arr;
       }
-    }
+    };
     db.updateCategory(move.category.id, -1, () => {
-      db.updateSummary(move.amount, types[move.category.type], 
+      db.updateSummary(-1 * move.amount, types[move.category.type],
         () => {
-          update(keys.MOVES, deleteElem(move.id), () => {
-            cb();
-          })
+          update(keys.MOVES, deleteElem(move.id), cb)
         })
     });
   },
@@ -154,14 +157,16 @@ const db = {
 
     update(keys.CATEGORIES, customUpdate(id, offset), cb);
   },
+
   updateSummary(amount, type, cb) {
-    function customUpdate(amount, type) {
+    var customUpdate = function(amount, type) {
       return function(elem) {
         elem[type] = '' + (Number(elem[type]) + Number(amount));
         elem.total = '' + (Number(elem.income) - Number(elem.expense));
         return elem;
       }
-    }
+    };
+
     update(keys.SUMMARY, customUpdate(amount, type), cb);
   },
   addMovement(data, cb) {
@@ -172,7 +177,7 @@ const db = {
         name: data.category.name,
         id: data.category.id,
         type: data.category.type
-      } 
+      }
     };
 
 
