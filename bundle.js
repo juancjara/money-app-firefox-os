@@ -26,9 +26,11 @@ var _logicSettings2 = _interopRequireDefault(_logicSettings);
 (0, _reactTapEventPlugin2['default'])();
 
 _logicDb2['default'].init(function (values) {
-  _logicDb2['default'].getSettings(function (conf) {
-    _logicSettings2['default'].init(conf);
-    _react2['default'].render(_react2['default'].createElement(_componentsAppJsx2['default'], null), document.getElementById('app'));
+  _logicDb2['default'].fixSummary(function () {
+    _logicDb2['default'].getSettings(function (conf) {
+      _logicSettings2['default'].init(conf);
+      _react2['default'].render(_react2['default'].createElement(_componentsAppJsx2['default'], null), document.getElementById('app'));
+    });
   });
 });
 
@@ -877,6 +879,10 @@ var _logicDb = require('../logic/db');
 
 var _logicDb2 = _interopRequireDefault(_logicDb);
 
+var _constants = require('../constants');
+
+var _constants2 = _interopRequireDefault(_constants);
+
 var Checkbox = _materialUi2['default'].Checkbox;
 
 var MovementList = _react2['default'].createClass({
@@ -886,7 +892,8 @@ var MovementList = _react2['default'].createClass({
     return {
       moves: [],
       movesGrouped: [],
-      groupedBy: false
+      groupedBy: false,
+      amount: this.props.data.amount
     };
   },
 
@@ -922,12 +929,18 @@ var MovementList = _react2['default'].createClass({
 
   removeGroup: function removeGroup(x, y) {
     var movesGrouped = this.state.movesGrouped;
-    var move = movesGrouped[x].moves.splice(y, 1);
+    var move = movesGrouped[x].moves.splice(y, 1)[0];
+
     if (!movesGrouped[x].moves.length) {
       movesGrouped.splice(x, 1);
     }
-    this.setState({ movesGrouped: movesGrouped });
-    _logicDb2['default'].removeMovement(move[0], function () {});
+
+    var amount = Number(this.state.amount) + move.amount * (move.category.type === _constants2['default'].INCOME ? -1 : 1);
+    this.setState({
+      movesGrouped: movesGrouped,
+      amount: amount
+    });
+    _logicDb2['default'].removeMovement(move, function () {});
   },
 
   removeMove: function removeMove(move) {
@@ -937,7 +950,12 @@ var MovementList = _react2['default'].createClass({
       if (moves[posFound].id === move.id) break;
     };
     moves.splice(posFound, 1);
-    this.setState({ moves: moves });
+    var amount = Number(this.state.amount) + move.amount * (move.category.type === _constants2['default'].INCOME ? -1 : 1);
+
+    this.setState({
+      moves: moves,
+      amount: amount
+    });
 
     _logicDb2['default'].removeMovement(move, function () {});
   },
@@ -970,14 +988,14 @@ var MovementList = _react2['default'].createClass({
         'div',
         { className: 'text-center mui-font-style-display-2' },
         _logicSettings2['default'].get('currency').value,
-        this.props.data.amount
+        this.state.amount
       ),
       _react2['default'].createElement(
         'span',
         { onTouchEnd: this.doToggle },
         _react2['default'].createElement(Checkbox, {
           labelPosition: 'left',
-          defaultSwitched: this.state.groupedBy,
+          defaultSwitched: !this.state.groupedBy,
           label: _logicSettings2['default'].getText('group by category') })
       ),
       _react2['default'].createElement(
@@ -993,7 +1011,7 @@ var MovementList = _react2['default'].createClass({
 exports['default'] = MovementList;
 module.exports = exports['default'];
 
-},{"../logic/Settings":14,"../logic/db":15,"./MovementItem.jsx":8,"./MovementItemGrouped.jsx":9,"material-ui":24,"react":270}],11:[function(require,module,exports){
+},{"../constants":12,"../logic/Settings":14,"../logic/db":15,"./MovementItem.jsx":8,"./MovementItemGrouped.jsx":9,"material-ui":24,"react":270}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1376,27 +1394,44 @@ _localforage2['default'].config({
   version: 1.0
 });
 
-function update(key, transform, cb) {
+var update = function update(key, transform, cb) {
   _localforage2['default'].getItem(key).then(function (value) {
     var newValue = transform(value);
     _localforage2['default'].setItem(key, newValue).then(cb);
   });
 };
 
-function createBulk(tasks, cb) {
+var getTotalAmountFromMovesType = function getTotalAmountFromMovesType(moves, type) {
+  return moves.filter(function (move) {
+    return move.category.type === type;
+  }).reduce(function (acc, move) {
+    return acc + move.amount;
+  }, 0);
+};
+
+var getTotalIncomeFrom = function getTotalIncomeFrom(moves) {
+  return getTotalAmountFromMovesType(moves, _constants2['default'].INCOME);
+};
+
+var getTotalExpenseFrom = function getTotalExpenseFrom(moves) {
+  return getTotalAmountFromMovesType(moves, _constants2['default'].EXPENSE);
+};
+
+var createBulk = function createBulk(tasks, cb) {
   var promises = tasks.map(function (item) {
     return _localforage2['default'].setItem(item.key, item.value);
   });
   Promise.all(promises).then(function (values) {
     cb(values);
   });
-}
+};
 
 //type = 1 income , 0 expense
 var db = {
   getSettings: function getSettings(cb) {
     _localforage2['default'].getItem(keys.SETTINGS).then(cb);
   },
+
   updateSettings: function updateSettings(newData, key, cb) {
 
     function customUpdate(newData, key) {
@@ -1407,6 +1442,7 @@ var db = {
     }
     update(keys.SETTINGS, customUpdate(newData, key), cb);
   },
+
   getCategoryList: function getCategoryList(type, cb) {
     _localforage2['default'].getItem(keys.CATEGORIES).then(function (arr) {
       var filArr = arr.filter(function (elem) {
@@ -1418,6 +1454,7 @@ var db = {
       cb(filArr);
     });
   },
+
   getCatMostUsed: function getCatMostUsed(cb) {
     _localforage2['default'].getItem(keys.CATEGORIES).then(function (arr) {
       arr.sort(function (a, b) {
@@ -1426,6 +1463,7 @@ var db = {
       cb(arr.slice(0, 9));
     });
   },
+
   useCategory: function useCategory(id, cb) {
     update(keys.CATEGORIES, function (arr) {
       arr[id].used++;
@@ -1493,6 +1531,7 @@ var db = {
       });
     });
   },
+
   updateCategory: function updateCategory(id, offset, cb) {
     function customUpdate(id, offset) {
       return function (arr) {
@@ -1520,6 +1559,7 @@ var db = {
 
     update(keys.SUMMARY, customUpdate(amount, type), cb);
   },
+
   addMovement: function addMovement(data, cb) {
     var obj = {
       date: (0, _moment2['default'])().toDate(),
@@ -1543,13 +1583,37 @@ var db = {
       db.updateSummary(data.amount, types[data.category.type], function () {
         db.nextId(function (id) {
           obj.id = id;
-          update(keys.MOVES, pushElem(obj), function (res) {
-            cb();
-          });
+          update(keys.MOVES, pushElem(obj), cb);
         });
       });
     });
   },
+
+  fixSummary: function fixSummary(cb) {
+    db.getMovementList(function (moves) {
+      if (!moves || !moves.length) {
+        cb();
+      }
+      var income = getTotalIncomeFrom(moves);
+      var expense = getTotalExpenseFrom(moves);
+      var newData = {
+        expense: '' + expense,
+        income: '' + income,
+        total: '' + (income - expense)
+      };
+      var customUpdate = function customUpdate(newData) {
+        return function (summary) {
+          summary.expense = newData.expense;
+          summary.income = newData.income;
+          summary.total = newData.total;
+          return summary;
+        };
+      };
+
+      update(keys.SUMMARY, customUpdate(newData), cb);
+    });
+  },
+
   createDB: function createDB(cb) {
     var summaryDefault = { income: '0', expense: '0', total: '0' };
     var categories = [{ id: '0', name: 'home', icon: 'icomoon-home2',
@@ -1577,6 +1641,7 @@ var db = {
 
     createBulk([{ key: keys.SUMMARY, value: summaryDefault }, { key: keys.MOVES, value: moves }, { key: keys.MOVE_ID, value: 0 }, { key: keys.CATEGORIES, value: categories }, { key: keys.SETTINGS, value: settingsDefault }], cb);
   },
+
   init: function init(cb) {
     _localforage2['default'].getItem(keys.SUMMARY).then(function (val) {
       if (val) return cb();

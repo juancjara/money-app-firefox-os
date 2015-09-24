@@ -6,9 +6,11 @@ import Settings from './logic/Settings';
 
 injectTapEventPlugin();
 
-db.init((values) =>{
-  db.getSettings((conf) => {
-    Settings.init(conf);
-    React.render(<App />, document.getElementById('app'));
+db.init((values) => {
+  db.fixSummary(() => {
+    db.getSettings((conf) => {
+      Settings.init(conf);
+      React.render(<App />, document.getElementById('app'));
+    })
   })
 })

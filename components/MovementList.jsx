@@ -5,6 +5,7 @@ import Settings from '../logic/Settings';
 import MovementItem from './MovementItem.jsx';
 import MovementItemGrouped from './MovementItemGrouped.jsx';
 import db from '../logic/db';
+import constants from '../constants';
 
 let Checkbox = mui.Checkbox;
 
@@ -13,7 +14,8 @@ let MovementList = React.createClass({
     return {
       moves: [],
       movesGrouped: [],
-      groupedBy: false
+      groupedBy: false,
+      amount: this.props.data.amount
     }
   },
 
@@ -47,12 +49,19 @@ let MovementList = React.createClass({
 
   removeGroup(x, y) {
     let movesGrouped = this.state.movesGrouped;
-    let move = movesGrouped[x].moves.splice(y, 1);
+    let move = movesGrouped[x].moves.splice(y, 1)[0];
+
     if (!movesGrouped[x].moves.length) {
       movesGrouped.splice(x, 1);
     }
-    this.setState({movesGrouped});
-    db.removeMovement(move[0], () => {});
+
+    let amount = Number(this.state.amount) + 
+      move.amount * (move.category.type === constants.INCOME? -1: 1);
+    this.setState({
+      movesGrouped,
+      amount
+    });
+    db.removeMovement(move, () => {});
   },
 
   removeMove(move) {
@@ -62,7 +71,13 @@ let MovementList = React.createClass({
       if (moves[posFound].id === move.id) break;
     };
     moves.splice(posFound, 1);
-    this.setState({moves});
+    let amount = Number(this.state.amount) +
+      move.amount * (move.category.type === constants.INCOME? -1: 1);
+
+    this.setState({
+      moves,
+      amount
+    });
 
     db.removeMovement(move, () =>{});
   },
@@ -90,12 +105,12 @@ let MovementList = React.createClass({
       <div className = 'Movement'>
         <div className="text-center mui-font-style-display-2">
           {Settings.get('currency').value}
-          {this.props.data.amount}
+          {this.state.amount}
         </div>
         <span onTouchEnd = {this.doToggle}>
           <Checkbox
             labelPosition = "left" 
-            defaultSwitched = {this.state.groupedBy} 
+            defaultSwitched = {!this.state.groupedBy} 
             label = {Settings.getText('group by category')} />
         </span>
         <ul className = 'list'>
