@@ -1,7 +1,7 @@
 {
   "name": "Budget",
   "description": "Handle your budget",
-  "version": "1.0",
+  "version": "1.3",
   "icons": {
     "128": "/images/wallet128.png"
   },
