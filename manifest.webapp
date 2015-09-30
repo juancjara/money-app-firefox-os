@@ -11,5 +11,9 @@
     "url": "https://github.com/juancjara"
   },
   "launch_path": "/index.html",
-  "default_locale": "en"
+  "default_locale": "en",
+  "type": "privileged",
+  "permissions": {
+    "device-storage:sdcard": {"access": "readwrite" }
+  }
 }

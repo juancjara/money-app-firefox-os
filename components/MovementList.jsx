@@ -5,13 +5,16 @@ import Settings from '../logic/Settings';
 import MovementItem from './MovementItem.jsx';
 import MovementItemGrouped from './MovementItemGrouped.jsx';
 import db from '../logic/db';
+import Storage from '../logic/storage';
 import constants from '../constants';
 
 let Checkbox = mui.Checkbox;
+let RaisedButton = mui.RaisedButton;
 
 let MovementList = React.createClass({
   getInitialState() {
     return {
+      loadingExport: null,
       moves: [],
       movesGrouped: [],
       groupedBy: false,
@@ -43,7 +46,6 @@ let MovementList = React.createClass({
   },
 
   componentDidMount() {
-    //TODO ADD INIT VALUE
     this.onChange(this.state.groupedBy);
   },
 
@@ -100,6 +102,21 @@ let MovementList = React.createClass({
     })
   },
 
+  exportMoves() {
+    this.setState({
+      loadingExport: 'Exporting moves. Please wait'
+    });
+    db.getMovementList((moves) => {
+      Storage.export(moves, (error) => {
+        let loadResult = 'Export finished on SDCard';
+        if (error) {
+          loadResult = 'An error has ocurred.' + error;
+        }
+        this.setState({loadingExport: loadResult});
+      })
+    })
+  },
+
   render() {
     return (
       <div className = 'Movement'>
@@ -107,6 +124,11 @@ let MovementList = React.createClass({
           {Settings.get('currency').value}
           {this.state.amount}
         </div>
+        <RaisedButton 
+          label = 'Export moves' 
+          secondary = {true}
+          onTouchEnd = {this.exportMoves} />
+        <div>{this.state.loadingExport}</div>
         <span onTouchEnd = {this.doToggle}>
           <Checkbox
             labelPosition = "left" 
